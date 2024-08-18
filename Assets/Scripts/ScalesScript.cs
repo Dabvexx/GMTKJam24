@@ -13,7 +13,6 @@ public class ScalesScript : MonoBehaviour
     #region Variables
     // Variables.
     [SerializeField] private GameObject scalePrefab;
-    [SerializeField] private GameObject scaleTargetPrefab;
     private Dictionary<GameObject, ScaleDish> scales= new Dictionary<GameObject, ScaleDish>();
     private GameObject[] scaleTargets;
     [SerializeField] private float centerOffset;
@@ -58,16 +57,16 @@ public class ScalesScript : MonoBehaviour
         for (int i = 0; i < numScales; i++)
         {
             Quaternion vecAngle = Quaternion.AngleAxis((scaleAngle * (i + 1)), Vector3.up);
-            Vector3 result = vecAngle * Vector3.forward;
+            Vector3 result = (vecAngle * Vector3.forward) * centerOffset;
             Debug.Log($"Vector for point {i}: {result}");
 
             // Set scale target to be level when first spawned
             // Will be set when we spawn in permenant weights
             scaleTargets[i] = new GameObject($"Scale {i} Target");
-            scaleTargets[i].transform.position = transform.position + (result * centerOffset);
+            scaleTargets[i].transform.position = transform.position + result;
 
             // Create scale object 
-            var scale = Instantiate(scalePrefab, transform.position + (result * centerOffset), Quaternion.identity, transform);
+            var scale = Instantiate(scalePrefab, transform.position + result, vecAngle, transform);
             ScaleDish scaleDish = scale.GetComponentInChildren<ScaleDish>();
             scales.Add(scale, scaleDish);
             //scales[scale].name = $"Scale {i}";
@@ -132,7 +131,7 @@ public class ScalesScript : MonoBehaviour
         {
             var scale = scales.ElementAt(i).Key;
             // Maybe make the slerp go faster with heavier weights, bigger diff.
-            scale.transform.position = Vector3.Slerp(scale.transform.position, scaleTargets[i].transform.position, .2f);
+            scale.transform.position = Vector3.Slerp(scale.transform.position, scaleTargets[i].transform.position, .1f);
         }
         //Vector3.Slerp
     }
@@ -166,7 +165,7 @@ public class ScalesScript : MonoBehaviour
 
                 //find the difference between them
                 float diff = scale1.Value.totalWeight - scale2.Value.totalWeight;
-                diff = Mathf.Abs(diff);
+                diff = Mathf.Abs(diff) / 100;
 
                 //Debug.Log(diff);
 
@@ -175,12 +174,16 @@ public class ScalesScript : MonoBehaviour
                 // I need to do a calculation that will bring it from an angle to a point on a circle.
                 // y = k (k = 0 in this case) + radius * sin(theta) (theta being the angle)
                 // At least i think.
-                Mathf.Clamp(diff, -45, 45);
+                Mathf.Clamp01(diff);
                 float rot = centerOffset * Mathf.Sin(diff);
                 Debug.Log(rot);
                 // calculate 
                 // whoever weighs more gets the negative value while the lighter one gets a positive value.
                 // scaleone 
+
+                Quaternion vecAngle = Quaternion.AngleAxis((scaleAngle * (i + 1)), Vector3.up);
+                Vector3 result = (vecAngle * Vector3.forward) * centerOffset;
+
                 if (diff == 0)
                 {
                     continue;
@@ -195,7 +198,7 @@ public class ScalesScript : MonoBehaviour
                     // we want it to go between its max and its min by the diff / 100
                     // its x and z position with y being the angle
                     // we have to calculate where 45 degrees is on a vector
-                    Vector3.Slerp(scaleTargets[i].transform.position);
+                    //Vector3.Slerp(scaleTargets[i].transform.position, a, diff);
                 }
             }
             // For now we only do the 2 cases, but if we do odd numbers we will probably have to do things based off the influence they have on the scales near and far then all averaged together
