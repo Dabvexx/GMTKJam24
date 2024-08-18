@@ -1,0 +1,9 @@
+a game about adding weights to scales to make them reach specified positions
+there will also be permenant weights added to some scales
+something to calculate the amount of weight needed (like hovering over the area will say 3/10th the weight())
+
+also have systems like the rpg roguelink game where you can get special weights and maybe other objects that have very very high weights if needed
+
+find target weights:
+add together all possible weights the user has
+multiply by 1.2
