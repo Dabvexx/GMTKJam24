@@ -10,13 +10,14 @@ public class ScaleDish : MonoBehaviour
     #region Variables
     // Variables.
     [SerializeField]public float totalWeight = 0f;
+    private ScalesScript ss;
     #endregion
 
     #region Unity Methods
 
     void Start()
     {
-        
+        ss = FindAnyObjectByType<ScalesScript>().GetComponent<ScalesScript>();
     }
 
     void Update()
@@ -26,9 +27,20 @@ public class ScaleDish : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other);
         if (other.gameObject.tag.Equals("Weight"))
         {
+            totalWeight += other.GetComponent<WeightScript>().weight;
+            Debug.Log(totalWeight);
+            ss.CalculateOffsetBasedOnWeight();
+        }
+    }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag.Equals("Weight"))
+        {
+            totalWeight -= other.GetComponent<WeightScript>().weight;
         }
     }
 

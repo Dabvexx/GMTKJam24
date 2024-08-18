@@ -11,7 +11,7 @@ public class WeightScript : MonoBehaviour
     // Variables.
     // Makes sure you cant remove weights once you use a modifier
     bool isLocked = false;
-    [SerializeField] private float weight = 1f;
+    public float weight = 1f;
     #endregion
 
     #region Unity Methods

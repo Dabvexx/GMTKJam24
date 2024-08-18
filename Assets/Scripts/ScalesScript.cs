@@ -71,10 +71,10 @@ public class ScalesScript : MonoBehaviour
             ScaleDish scaleDish = scale.GetComponentInChildren<ScaleDish>();
             scales.Add(scale, scaleDish);
             //scales[scale].name = $"Scale {i}";
-            GeneratePermanentWeights(1, 5);
+            GeneratePermanentWeights(scale.transform, 1, 5);
         }
 
-        CalculateOffsetBasedOnWeight(numScales);
+        CalculateOffsetBasedOnWeight();
     }
 
     private void CalculateWinPositions()
@@ -90,15 +90,19 @@ public class ScalesScript : MonoBehaviour
     /// <param name="maxTotalWeight">The amount of weight total on a scale</param>
     /// <returns>The amount of weight on a scale that can not be moved</returns>
     /// Might change the return to have a few weights you are able to take off the gain some new weights
+    /// this should be changed to weighing out an item or gold coins from a customer
     private void GeneratePermanentWeights(Transform scaleLocation, int maxNumWeights, float maxTotalWeight)
     {
         int curWeights = 0;
         float curWeight = 0;
 
-        while (maxTotalWeight < curWeight || curWeights < maxNumWeights)
-        {
-
-        }
+        //while (maxTotalWeight < curWeight || curWeights < maxNumWeights)
+        //{
+        //    Vector3 pos = RandomCirclePoint(scaleLocation.transform.position, 1);
+        //    Quaternion rot = Quaternion.FromToRotation(Vector3.forward, scaleLocation.transform.position - pos);
+            // Instantiate the object being paid for
+            //Instantiate
+        //}
     }
 
     private Vector3 RandomCirclePoint(Vector3 center, float radius)
@@ -121,45 +125,6 @@ public class ScalesScript : MonoBehaviour
     // num scales away is 
     // ex: 2 scales: weight is 1:1
     // 3: influence is 1:2
-
-    // Use these values as points to go to and lerp between then
-    // Only update this when a weight updates a scale
-    private void CalculateOffsetBasedOnWeight(int numScales)
-    {
-        // we only influence the scale directly across from us in this case
-        if (numScales % 2 == 1)
-        {
-            for (int i = 0; i < numScales / 2; i++)
-            {
-                // process in pairs
-                var scale1 = scales.ElementAt(i);
-                var scale2 = scales.ElementAt(i + (numScales / 2));
-
-                //find the difference between them
-                float diff = scale1.Value.totalWeight - scale2.Value.totalWeight;
-                diff = Mathf.Abs(diff);
-
-                // Might make this more sophisticated than a clamp.
-                // +-45 degrees is the max it should do though
-                // I need to do a calculation that will bring it from an angle to a point on a circle.
-                // y = k (k = 0 in this case) + radius * sin(theta) (theta being the angle)
-                // At least i think.
-                Mathf.Clamp(diff, -45, 45);
-                float rot = centerOffset * Mathf.Sin(diff);
-                Debug.Log(rot);
-                // calculate 
-                // whoever weighs more gets the negative value while the lighter one gets a positive value.
-                // scaleone 
-                if (scale1.Value.totalWeight > scale2.Value.totalWeight)
-                {
-                    // do something to move the target point down
-                    //scale1.Key.transform.position
-                    scaleTargets[i].transform.position = Vector3.down * diff;
-                }
-            }
-            // For now we only do the 2 cases, but if we do odd numbers we will probably have to do things based off the influence they have on the scales near and far then all averaged together
-        }
-    }
 
     private void UpdateScalePosition(int numScales)
     {
@@ -185,6 +150,57 @@ public class ScalesScript : MonoBehaviour
 
     #region Public Methods
     // Public Methods.
+
+    // Use these values as points to go to and lerp between then
+    // Only update this when a weight updates a scale
+    public void CalculateOffsetBasedOnWeight()
+    {
+        // we only influence the scale directly across from us in this case
+        if (scaleNum % 2 == 0)
+        {
+            for (int i = 0; i < scaleNum / 2; i++)
+            {
+                // process in pairs
+                var scale1 = scales.ElementAt(i);
+                var scale2 = scales.ElementAt(i + (scaleNum / 2));
+
+                //find the difference between them
+                float diff = scale1.Value.totalWeight - scale2.Value.totalWeight;
+                diff = Mathf.Abs(diff);
+
+                //Debug.Log(diff);
+
+                // Might make this more sophisticated than a clamp.
+                // +-45 degrees is the max it should do though
+                // I need to do a calculation that will bring it from an angle to a point on a circle.
+                // y = k (k = 0 in this case) + radius * sin(theta) (theta being the angle)
+                // At least i think.
+                Mathf.Clamp(diff, -45, 45);
+                float rot = centerOffset * Mathf.Sin(diff);
+                Debug.Log(rot);
+                // calculate 
+                // whoever weighs more gets the negative value while the lighter one gets a positive value.
+                // scaleone 
+                if (diff == 0)
+                {
+                    continue;
+                }
+                if (scale1.Value.totalWeight > scale2.Value.totalWeight)
+                {
+                    // do something to move the target point down
+                    //scale1.Key.transform.position
+                    scaleTargets[i].transform.position += Vector3.down * diff;
+                    scaleTargets[i + (scaleNum / 2)].transform.position += Vector3.down * -diff;
+                    // slerp across a plane that cuts through itself
+                    // we want it to go between its max and its min by the diff / 100
+                    // its x and z position with y being the angle
+                    // we have to calculate where 45 degrees is on a vector
+                    Vector3.Slerp(scaleTargets[i].transform.position)
+                }
+            }
+            // For now we only do the 2 cases, but if we do odd numbers we will probably have to do things based off the influence they have on the scales near and far then all averaged together
+        }
+    }
 
     #endregion
 }
