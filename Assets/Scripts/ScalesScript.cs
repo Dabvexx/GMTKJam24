@@ -18,7 +18,7 @@ public class ScalesScript : MonoBehaviour
     private GameObject[] scaleTargets;
     [SerializeField] private float centerOffset;
     [SerializeField] private int scaleNum;
-
+    float scaleAngle;
     #endregion
 
     #region Unity Methods
@@ -51,13 +51,13 @@ public class ScalesScript : MonoBehaviour
     {
         scaleTargets = new GameObject[numScales];
         // Calculate angle between points 
-        float angle = Mathf.Rad2Deg * ((2 * Mathf.PI) / numScales);
-        Debug.Log($"angle for n = {scaleNum} points: {angle}");
+        scaleAngle = Mathf.Rad2Deg * ((2 * Mathf.PI) / numScales);
+        Debug.Log($"angle for n = {scaleNum} points: {scaleAngle}");
 
         // Turn that angle into a vector3 around the center point
         for (int i = 0; i < numScales; i++)
         {
-            Quaternion vecAngle = Quaternion.AngleAxis((angle * (i + 1)), Vector3.up);
+            Quaternion vecAngle = Quaternion.AngleAxis((scaleAngle * (i + 1)), Vector3.up);
             Vector3 result = vecAngle * Vector3.forward;
             Debug.Log($"Vector for point {i}: {result}");
 
@@ -195,7 +195,7 @@ public class ScalesScript : MonoBehaviour
                     // we want it to go between its max and its min by the diff / 100
                     // its x and z position with y being the angle
                     // we have to calculate where 45 degrees is on a vector
-                    Vector3.Slerp(scaleTargets[i].transform.position)
+                    Vector3.Slerp(scaleTargets[i].transform.position);
                 }
             }
             // For now we only do the 2 cases, but if we do odd numbers we will probably have to do things based off the influence they have on the scales near and far then all averaged together
