@@ -175,7 +175,7 @@ public class ScalesScript : MonoBehaviour
                 // y = k (k = 0 in this case) + radius * sin(theta) (theta being the angle)
                 // At least i think.
                 Mathf.Clamp01(diff);
-                float rot = centerOffset * Mathf.Sin(diff);
+                float rot = Mathf.Sin(diff);
                 Debug.Log(rot);
                 // calculate 
                 // whoever weighs more gets the negative value while the lighter one gets a positive value.

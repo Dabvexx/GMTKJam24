@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GoldMat
+  m_Name: MetalMat
   m_Shader: {fileID: 4800000, guid: 2a230514c860643f69b6a4d1871d3825, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -157,7 +157,7 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _RimEnabled: 0
-    - _SelfShadingSize: 0
+    - _SelfShadingSize: 0.993
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularEnabled: 0
@@ -181,7 +181,7 @@ Material:
     - _FlatSpecularColor: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
     - _LightAttenuation: {r: 0, g: 0.9888683, b: 0, a: 0}
     - _LightmapDirection: {r: 0, g: 1, b: 0, a: 0}
-    - _OutlineColor: {r: 0.13074046, g: 0.20499295, b: 0.24528301, a: 1}
+    - _OutlineColor: {r: 0.12941177, g: 0.20392157, b: 0.24705882, a: 1}
     - _ShadowColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
@@ -191,7 +191,7 @@ Texture2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: z__GradientRampTex{"mode":0,"colorKeys":[{"color":{"r":1.0,"g":0.7314583659172058,"b":0.1745283007621765,"a":1.0},"time":0.0},{"color":{"r":1.0,"g":0.8313016891479492,"b":0.2594339847564697,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":1.0,"time":0.0},{"alpha":1.0,"time":1.0}]}
+  m_Name: z__GradientRampTex{"mode":0,"colorKeys":[{"color":{"r":0.3679245114326477,"g":0.3679245114326477,"b":0.3679245114326477,"a":1.0},"time":0.0},{"color":{"r":0.5915361046791077,"g":0.5943396091461182,"b":0.5943396091461182,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":1.0,"time":0.0},{"alpha":1.0,"time":1.0}]}
   m_ImageContentsHash:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
@@ -227,7 +227,7 @@ Texture2D:
   m_ColorSpace: 1
   m_PlatformBlob: 
   image data: 1024
-  _typelessdata: ffffbb2dffffbb2dffffbb2dffffbb2dffffbb2dffffbb2dffffbb2dffffbb2dffffbb2dffffbb2dffffbc2dffffbc2dffffbc2effffbc2effffbc2effffbc2effffbc2effffbc2effffbc2effffbc2effffbd2effffbd2effffbd2effffbd2effffbd2fffffbd2fffffbd2fffffbd2fffffbd2fffffbd2fffffbe2fffffbe2fffffbe2fffffbe2fffffbe2fffffbe2fffffbe30ffffbe30ffffbe30ffffbe30ffffbf30ffffbf30ffffbf30ffffbf30ffffbf30ffffbf30ffffbf30ffffbf30ffffbf31ffffbf31ffffc031ffffc031ffffc031ffffc031ffffc031ffffc031ffffc031ffffc031ffffc031ffffc032ffffc132ffffc132ffffc132ffffc132ffffc132ffffc132ffffc132ffffc132ffffc132ffffc132ffffc232ffffc233ffffc233ffffc233ffffc233ffffc233ffffc233ffffc233ffffc233ffffc233ffffc333ffffc333ffffc333ffffc334ffffc334ffffc334ffffc334ffffc334ffffc334ffffc334ffffc434ffffc434ffffc434ffffc434ffffc434ffffc435ffffc435ffffc435ffffc435ffffc435ffffc535ffffc535ffffc535ffffc535ffffc535ffffc535ffffc536ffffc536ffffc536ffffc536ffffc636ffffc636ffffc636ffffc636ffffc636ffffc636ffffc636ffffc636ffffc637ffffc637ffffc737ffffc737ffffc737ffffc737ffffc737ffffc737ffffc737ffffc737ffffc737ffffc737ffffc838ffffc838ffffc838ffffc838ffffc838ffffc838ffffc838ffffc838ffffc838ffffc838ffffc838ffffc938ffffc939ffffc939ffffc939ffffc939ffffc939ffffc939ffffc939ffffc939ffffc939ffffca39ffffca39ffffca39ffffca3affffca3affffca3affffca3affffca3affffca3affffca3affffcb3affffcb3affffcb3affffcb3affffcb3bffffcb3bffffcb3bffffcb3bffffcb3bffffcb3bffffcc3bffffcc3bffffcc3bffffcc3bffffcc3bffffcc3bffffcc3cffffcc3cffffcc3cffffcc3cffffcd3cffffcd3cffffcd3cffffcd3cffffcd3cffffcd3cffffcd3cffffcd3cffffcd3dffffcd3dffffce3dffffce3dffffce3dffffce3dffffce3dffffce3dffffce3dffffce3dffffce3dffffce3dffffcf3effffcf3effffcf3effffcf3effffcf3effffcf3effffcf3effffcf3effffcf3effffcf3effffd03effffd03fffffd03fffffd03fffffd03fffffd03fffffd03fffffd03fffffd03fffffd03fffffd13fffffd13fffffd13fffffd140ffffd140ffffd140ffffd140ffffd140ffffd140ffffd140ffffd240ffffd240ffffd240ffffd240ffffd240ffffd241ffffd241ffffd241ffffd241ffffd241ffffd341ffffd341ffffd341ffffd341ffffd341ffffd341ffffd341ffffd342ffffd342ffffd342ffffd442ffffd442ffffd442ffffd442ffffd442
+  _typelessdata: ff5e5e5eff5e5e5eff5e5e5eff5e5e5eff5f5f5fff5f5f5fff5f5f5fff5f5f5fff606060ff606060ff606060ff606060ff616161ff616161ff616161ff616161ff616161ff626262ff626262ff626262ff626262ff636363ff636363ff636363ff636363ff636363ff646464ff646464ff646464ff646464ff656565ff656565ff656565ff656565ff656666ff666666ff666666ff666666ff666666ff676767ff676767ff676767ff676767ff676868ff686868ff686868ff686868ff686868ff696969ff696969ff696969ff696969ff696a6aff6a6a6aff6a6a6aff6a6a6aff6a6a6aff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6c6cff6c6c6cff6c6c6cff6c6c6cff6c6d6dff6d6d6dff6d6d6dff6d6d6dff6d6d6dff6d6e6eff6e6e6eff6e6e6eff6e6e6eff6e6f6fff6f6f6fff6f6f6fff6f6f6fff6f6f6fff6f7070ff707070ff707070ff707070ff707171ff717171ff717171ff717171ff717272ff717272ff727272ff727272ff727272ff727373ff737373ff737373ff737373ff737474ff747474ff747474ff747474ff747474ff747575ff757575ff757575ff757575ff757676ff767676ff767676ff767676ff767777ff767777ff777777ff777777ff777777ff777878ff787878ff787878ff787878ff787979ff787979ff797979ff797979ff797979ff797a7aff7a7a7aff7a7a7aff7a7a7aff7a7b7bff7a7b7bff7b7b7bff7b7b7bff7b7b7bff7b7c7cff7c7c7cff7c7c7cff7c7c7cff7c7d7dff7c7d7dff7d7d7dff7d7d7dff7d7e7eff7d7e7eff7e7e7eff7e7e7eff7e7e7eff7e7f7fff7e7f7fff7f7f7fff7f7f7fff7f8080ff7f8080ff808080ff808080ff808080ff808181ff808181ff818181ff818181ff818282ff818282ff828282ff828282ff828383ff828383ff828383ff838383ff838383ff838484ff838484ff848484ff848484ff848585ff848585ff858585ff858585ff858585ff858686ff858686ff868686ff868686ff868787ff868787ff878787ff878787ff878787ff878888ff878888ff888888ff888888ff888989ff888989ff898989ff898989ff898a8aff898a8aff898a8aff8a8a8aff8a8a8aff8a8b8bff8a8b8bff8b8b8bff8b8b8bff8b8c8cff8b8c8cff8b8c8cff8c8c8cff8c8c8cff8c8d8dff8c8d8dff8d8d8dff8d8d8dff8d8e8eff8d8e8eff8d8e8eff8e8e8eff8e8f8fff8e8f8fff8e8f8fff8f8f8fff8f8f8fff8f9090ff8f9090ff8f9090ff909090ff909191ff909191ff909191ff919191ff919191ff919292ff919292ff919292ff929292ff929393ff929393ff929393ff939393ff939393ff939494ff939494ff939494ff949494ff949595ff949595ff949595ff959595ff959696ff959696ff959696ff969696ff969696ff969797ff969797ff969797ff979797ff979898
   m_StreamData:
     serializedVersion: 2
     offset: 0
