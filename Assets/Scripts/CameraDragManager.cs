@@ -11,6 +11,7 @@ public class CameraDragManager : MonoBehaviour
     #region Variables
     // Variables.
     public bool canClick = true;
+    [SerializeField] private GameObject scale;
     CinemachineVirtualCamera cam;
     #endregion
 
@@ -23,8 +24,8 @@ public class CameraDragManager : MonoBehaviour
     private void OnEnable()
     {
         cam = GetComponent<CinemachineVirtualCamera>();
-        cam.Follow = transform;
-        cam.LookAt = transform;
+        cam.Follow = scale.transform;
+        cam.LookAt = scale.transform;
         cam.GetCinemachineComponent<CinemachineFramingTransposer>().m_CameraDistance = 15f;
     }
 

@@ -27,7 +27,7 @@ public class ScalesScript : MonoBehaviour
     //[SerializeField] private float speed = 1f;
     [SerializeField] private int scaleNum;
 
-    private ShopManager shopManager;
+    [SerializeField] private ShopManager shopManager;
 
     private float scaleAngle;
 
@@ -38,26 +38,26 @@ public class ScalesScript : MonoBehaviour
     private void Start()
     {
         GenerateScales(scaleNum);
-        shopManager = FindAnyObjectByType<ShopManager>().GetComponent<ShopManager>();
+        //shopManager = FindAnyObjectByType<ShopManager>().GetComponent<ShopManager>();
     }
     float timer = 0f;
     float totalTimeTaken = 0f;
     private void Update()
     {
-        foreach (var scale in scales.Values)
-        {
-            //Gizmos.DrawLine(scales[i].transform.position, transform.position);
-            //Debug.DrawRay(scale.transform.position, (transform.position - scale.transform.position) * 2.2f);
-        }
-
         timer += Time.deltaTime;
         totalTimeTaken += Time.deltaTime;
+
+        if (FindAnyObjectByType<CameraDragManager>().GetComponent<CameraDragManager>().enabled == false)
+        {
+            timer = 0f;
+            totalTimeTaken = 0f;
+        }
 
         UpdateScalePosition();
 
         if (CheckIfWinning()) 
         {
-            if (timer > 3f)
+            if (timer > 5f)
             {
                 // Do win stuff, add gold, reset objects
                 // Do this last right before resetting.
@@ -103,17 +103,11 @@ public class ScalesScript : MonoBehaviour
 
             // Create scale object
             var scale = Instantiate(scalePrefab, transform.position + result, vecAngle, transform);
+            scale.name = "Arm " + i;
             ScaleDish scaleDish = scale.GetComponentInChildren<ScaleDish>();
             scales.Add(scale, scaleDish);
             //scales[scale].name = $"Scale {i}";
-            if ((i + 1) % 2 == 0)
-            {
-                // Spawn the item to weigh
-                //permaItem = SpawnPermanentWeight
-            }
         }
-
-        
     }
 
     private bool CheckIfWinning()
@@ -231,6 +225,11 @@ public class ScalesScript : MonoBehaviour
             Gizmos.DrawRay(scales[i].transform.position, (transform.position - scales[i].transform.position) * 2);
         }
     }*/
+
+    private void SpawnPermanentWeight()
+    {
+        permaItem = Instantiate(permaweights[Random.Range(0, permaweights.Count - 1)], scales.ElementAt(1).Value.transform.position + (Vector3.up * 2), Quaternion.identity, transform);
+    }
 
     private float CalculateDifferenceInWeight(float scale1, float scale2)
     {

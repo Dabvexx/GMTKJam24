@@ -70,7 +70,8 @@ public class ShopManager : MonoBehaviour
     public void CalculateMoneyGained(WeightScript script, float weight, float timeTaken)
     {
         var timeMultiplier = (3 * timeTaken) * Mathf.Pow(5, timeTaken/100);
-        var value = script.type;
+        ValueTypes value = script.type;
+
         float typeValue = 0;
         switch (value)
         {
