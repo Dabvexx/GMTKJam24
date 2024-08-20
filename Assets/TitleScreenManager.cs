@@ -5,26 +5,32 @@ using UnityEngine;
 ///<summary>
 /// 
 ///</summary>
-public enum ValueTypes { veryLow, low, medium, high, veryHigh }
-public class WeightScript : MonoBehaviour
+public class TitleScreenManager : MonoBehaviour
 {
     #region Variables
     // Variables.
-    // Makes sure you cant remove weights once you use a modifier
-    public bool isLocked = false;
-    public float weight = 1f;
-    public ValueTypes type = ValueTypes.veryLow;
+    [SerializeField] private CameraDragManager dragManager;
+    private Vector3 movePoint;
     #endregion
 
     #region Unity Methods
 
     void Start()
     {
-        
+        movePoint = transform.position;
     }
+
+
 
     void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            dragManager.enabled = true;
+            movePoint += Vector3.up * 4;
+        }
+
+        Vector3.MoveTowards(transform.position, movePoint, Time.deltaTime * 5);
         
     }
 
@@ -37,5 +43,6 @@ public class WeightScript : MonoBehaviour
 
     #region Public Methods
     // Public Methods.
+    
     #endregion
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 ///<summary>
 ///
@@ -20,9 +21,13 @@ public class ScalesScript : MonoBehaviour
 
     [SerializeField] private float centerOffset;
     [SerializeField] private float baseSpeed = 35;
+    [SerializeField] private List<GameObject> permaweights;
+    private GameObject permaItem;
 
     //[SerializeField] private float speed = 1f;
     [SerializeField] private int scaleNum;
+
+    private ShopManager shopManager;
 
     private float scaleAngle;
 
@@ -33,8 +38,10 @@ public class ScalesScript : MonoBehaviour
     private void Start()
     {
         GenerateScales(scaleNum);
+        shopManager = FindAnyObjectByType<ShopManager>().GetComponent<ShopManager>();
     }
-
+    float timer = 0f;
+    float totalTimeTaken = 0f;
     private void Update()
     {
         foreach (var scale in scales.Values)
@@ -42,7 +49,27 @@ public class ScalesScript : MonoBehaviour
             //Gizmos.DrawLine(scales[i].transform.position, transform.position);
             //Debug.DrawRay(scale.transform.position, (transform.position - scale.transform.position) * 2.2f);
         }
+
+        timer += Time.deltaTime;
+        totalTimeTaken += Time.deltaTime;
+
         UpdateScalePosition();
+
+        if (CheckIfWinning()) 
+        {
+            if (timer > 3f)
+            {
+                // Do win stuff, add gold, reset objects
+                // Do this last right before resetting.
+                totalTimeTaken = 0;
+                var weights = GameObject.FindGameObjectsWithTag("Weight");
+                shopManager.CalculateMoneyGained(permaItem.GetComponent<WeightScript>() , scales.ElementAt(0).Value.totalWeight, totalTimeTaken);
+            }
+        }
+        else
+        {
+            timer = 0;
+        }
     }
 
     #endregion Unity Methods
@@ -79,15 +106,25 @@ public class ScalesScript : MonoBehaviour
             ScaleDish scaleDish = scale.GetComponentInChildren<ScaleDish>();
             scales.Add(scale, scaleDish);
             //scales[scale].name = $"Scale {i}";
-            GeneratePermanentWeights(scale.transform, 1, 5);
+            if ((i + 1) % 2 == 0)
+            {
+                // Spawn the item to weigh
+                //permaItem = SpawnPermanentWeight
+            }
         }
 
-        //CalculateOffsetBasedOnWeight();
+        
     }
 
-    private void CalculateWinPositions()
+    private bool CheckIfWinning()
     {
         // box trigger colliders that if the scale enters gets set to true and false when exit.
+        // Scrapping the multi scales for now.
+        if (Mathf.Approximately(CalculateDifferenceInWeight(scales.ElementAt(0).Value.totalWeight, scales.ElementAt(1).Value.totalWeight), 0))
+        {
+            return true;
+        }
+        return false;
     }
 
     /// <summary>
@@ -98,18 +135,9 @@ public class ScalesScript : MonoBehaviour
     /// <returns>The amount of weight on a scale that can not be moved</returns>
     /// Might change the return to have a few weights you are able to take off the gain some new weights
     /// this should be changed to weighing out an item or gold coins from a customer
-    private void GeneratePermanentWeights(Transform scaleLocation, int maxNumWeights, float maxTotalWeight)
+    private void GenerateScaleItem(Transform scaleLocation)
     {
-        int curWeights = 0;
-        float curWeight = 0;
-
-        //while (maxTotalWeight < curWeight || curWeights < maxNumWeights)
-        //{
-        //    Vector3 pos = RandomCirclePoint(scaleLocation.transform.position, 1);
-        //    Quaternion rot = Quaternion.FromToRotation(Vector3.forward, scaleLocation.transform.position - pos);
-        // Instantiate the object being paid for
-        //Instantiate
-        //}
+        
     }
 
     private Vector3 RandomCirclePoint(Vector3 center, float radius)

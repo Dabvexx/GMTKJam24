@@ -11,12 +11,21 @@ public class CameraDragManager : MonoBehaviour
     #region Variables
     // Variables.
     public bool canClick = true;
+    CinemachineVirtualCamera cam;
     #endregion
 
     #region Unity Methods
 
     void Start()
     {
+    }
+
+    private void OnEnable()
+    {
+        cam = GetComponent<CinemachineVirtualCamera>();
+        cam.Follow = transform;
+        cam.LookAt = transform;
+        cam.GetCinemachineComponent<CinemachineFramingTransposer>().m_CameraDistance = 15f;
     }
 
     void LateUpdate()

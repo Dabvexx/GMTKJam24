@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using TMPro;
 
 ///<summary>
 /// 
@@ -13,6 +14,7 @@ public class ShopManager : MonoBehaviour
     public static int gold = 0;
     [SerializeField] private GameObject boxPrefab;
     [SerializeField] private GameObject weightPrefab;
+    [SerializeField] private TextMeshProUGUI GoldCounter;
 
     #endregion
 
@@ -63,6 +65,48 @@ public class ShopManager : MonoBehaviour
         {
             Debug.Log($"vector of scale for weight {weights[i]}: {WeightVolumeManager.ScaleWeightByVolume(weights[i])}");
         }
+    }
+
+    public void CalculateMoneyGained(WeightScript script, float weight, float timeTaken)
+    {
+        var timeMultiplier = (3 * timeTaken) * Mathf.Pow(5, timeTaken/100);
+        var value = script.type;
+        float typeValue = 0;
+        switch (value)
+        {
+            case (ValueTypes.veryLow):
+                typeValue = 1f;
+                break;
+            case (ValueTypes.low):
+                typeValue = 2f;
+                break;
+            case (ValueTypes.medium):
+                typeValue = 3f;
+                break;
+            case (ValueTypes.high):
+                typeValue = 4f;
+                break;
+            case (ValueTypes.veryHigh):
+                typeValue = 5f;
+                break;
+            default:
+                typeValue = 1f;
+                break;
+        }
+
+        gold += Mathf.FloorToInt(typeValue * weight * timeTaken);
+        UpdateGoldCounter();
+    }
+
+    public void BuyThings(int index)
+    {
+        // spawn box with weights
+        // Might have to make it a prefab if i dont have time.
+    }
+
+    public void UpdateGoldCounter()
+    {
+        GoldCounter.text = $"Gold: {gold}";
     }
 
     private Vector3 RandomCirclePoint(Vector3 center, float radius, float excludeRadius)
