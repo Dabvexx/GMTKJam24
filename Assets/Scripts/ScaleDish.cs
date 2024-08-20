@@ -27,11 +27,12 @@ public class ScaleDish : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other);
         if (other.gameObject.tag.Equals("Weight"))
         {
+            Debug.Log(other.GetComponent<WeightScript>().weight);
+
             totalWeight += other.GetComponent<WeightScript>().weight;
-            Debug.Log(totalWeight);
+            //Debug.Log(totalWeight);
             ss.CalculateOffsetBasedOnWeight();
         }
     }
@@ -41,6 +42,7 @@ public class ScaleDish : MonoBehaviour
         if (other.gameObject.tag.Equals("Weight"))
         {
             totalWeight -= other.GetComponent<WeightScript>().weight;
+            ss.CalculateOffsetBasedOnWeight();
         }
     }
 
