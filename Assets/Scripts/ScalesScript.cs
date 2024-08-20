@@ -230,7 +230,7 @@ public class ScalesScript : MonoBehaviour
 
     private void SpawnPermanentWeight()
     {
-        permaItem = Instantiate(permaweights[Random.Range(0, permaweights.Count - 1)], scales.ElementAt(1).Value.transform.position + (Vector3.up * 1.4f), Quaternion.identity, transform);
+        permaItem = Instantiate(permaweights[Random.Range(0, permaweights.Count)], scales.ElementAt(1).Value.transform.position + (Vector3.up * 1.4f), Quaternion.identity, transform);
     }
 
     private float CalculateDifferenceInWeight(float scale1, float scale2)

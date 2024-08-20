@@ -1013,6 +1013,7 @@ GameObject:
   m_Component:
   - component: {fileID: 937902129}
   - component: {fileID: 937902128}
+  - component: {fileID: 937902130}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1032,9 +1033,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e103c00c5cf66eb4fb351f2c0ebbf055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxPrefab: {fileID: 0}
-  weightPrefab: {fileID: 0}
-  GoldCounter: {fileID: 0}
+  boxPrefab: {fileID: 9007671986200193115, guid: 18e92738f3467f9469b3b9e67fed0522,
+    type: 3}
+  weightPrefab: {fileID: 446807441264708473, guid: 2dd54f68d3f81884980a0ef2f0f0d24d,
+    type: 3}
+  GoldCounter: {fileID: 1410196128}
 --- !u!4 &937902129
 Transform:
   m_ObjectHideFlags: 0
@@ -1050,6 +1053,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &937902130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 937902127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be195a17d681ea74aba1b43211a517dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dm: {fileID: 0}
+  selectableTag: Weight
 --- !u!1001 &1010544719
 PrefabInstance:
   m_ObjectHideFlags: 0

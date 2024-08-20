@@ -11,7 +11,6 @@ public class PickupScript : MonoBehaviour
     [SerializeField] private CameraDragManager dm;
 
     [SerializeField] private string selectableTag = "Weight";
-    private CameraDragManager cdm;
 
     private Transform _selection;
 
@@ -21,7 +20,7 @@ public class PickupScript : MonoBehaviour
 
     private void Start()
     {
-        cdm = FindObjectOfType<CameraDragManager>().GetComponent<CameraDragManager>();
+        dm = FindObjectOfType<CameraDragManager>().GetComponent<CameraDragManager>();
     }
 
     private void Update()
@@ -34,28 +33,30 @@ public class PickupScript : MonoBehaviour
         // Let go when let go of click
         if (_selection != null)
         {
+            _selection.position = new Vector3(_selection.position.x + Input.GetAxis("Horizontal"), 0, _selection.position.z + Input.GetAxis("Vertical"));
+            _selection.rotation = Quaternion.identity;
             _selection = null;
-            cdm.canClick = true;
+            dm.canClick = true;
         }
 
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
+            //Debug.Log("We hit");
             if (Input.GetMouseButtonDown(0))
             {
+                //Debug.Log("Mouse is down");
                 var selection = hit.transform;
-                if (selection.CompareTag(selectableTag))
+                if (selection.GetComponentInChildren<WeightScript>().CompareTag(selectableTag))
                 {
-                    Debug.Log("Hit Weight");
+                    //Debug.Log("Hit Weight");
                     if (!selection.GetComponentInChildren<WeightScript>().isLocked)
                     {
-                        Debug.Log("Ladies and gentlemen we got em");
-                        cdm.canClick = false;
                         _selection = selection;
+                        //Debug.Log("Ladies and gentlemen we got em");
                         _selection.parent = null;
-                        _selection.position = new Vector3(_selection.position.x, 0, _selection.position.z);
-                        selection.rotation = Quaternion.identity;
+                        dm.canClick = false;
                     }
                 }
             }
