@@ -27,6 +27,7 @@ public class CameraDragManager : MonoBehaviour
         cam.Follow = scale.transform;
         cam.LookAt = scale.transform;
         cam.GetCinemachineComponent<CinemachineFramingTransposer>().m_CameraDistance = 15f;
+        cam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = new Vector3(0, 2, 2.5f);
     }
 
     void LateUpdate()

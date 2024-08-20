@@ -14,7 +14,7 @@ public class ScalesScript : MonoBehaviour
     // Variables.
     [SerializeField] private GameObject scalePrefab;
 
-    private Dictionary<GameObject, ScaleDish> scales = new Dictionary<GameObject, ScaleDish>();
+    [SerializeField]private Dictionary<GameObject, ScaleDish> scales = new Dictionary<GameObject, ScaleDish>();
     private Vector3[] pivots;
     private float[] pivotAmounts;
     private float[] currentRotation;
@@ -39,6 +39,7 @@ public class ScalesScript : MonoBehaviour
     {
         GenerateScales(scaleNum);
         //shopManager = FindAnyObjectByType<ShopManager>().GetComponent<ShopManager>();
+        SpawnPermanentWeight();
     }
     float timer = 0f;
     float totalTimeTaken = 0f;
@@ -59,11 +60,25 @@ public class ScalesScript : MonoBehaviour
         {
             if (timer > 5f)
             {
+                List<GameObject> list = new List<GameObject>();
                 // Do win stuff, add gold, reset objects
                 // Do this last right before resetting.
-                totalTimeTaken = 0;
-                var weights = GameObject.FindGameObjectsWithTag("Weight");
                 shopManager.CalculateMoneyGained(permaItem.GetComponent<WeightScript>() , scales.ElementAt(0).Value.totalWeight, totalTimeTaken);
+                foreach (var scale in scales.Keys)
+                {
+                    foreach (var child in scales.ElementAt(1).Value.transform.GetComponentsInChildren<WeightScript>())
+                    {
+                        list.Add(child.gameObject);
+                    }
+                }
+
+                foreach (var item in list)
+                {
+                    list.Remove(item);
+                    Destroy(item.gameObject);
+                }
+                totalTimeTaken = 0;
+                SpawnPermanentWeight();
             }
         }
         else
@@ -114,24 +129,11 @@ public class ScalesScript : MonoBehaviour
     {
         // box trigger colliders that if the scale enters gets set to true and false when exit.
         // Scrapping the multi scales for now.
-        if (Mathf.Approximately(CalculateDifferenceInWeight(scales.ElementAt(0).Value.totalWeight, scales.ElementAt(1).Value.totalWeight), 0))
+        if (Mathf.Approximately(CalculateDifferenceInWeight(scales.ElementAt(0).Value.totalWeight, scales.ElementAt(1).Value.totalWeight), 0f))
         {
             return true;
         }
         return false;
-    }
-
-    /// <summary>
-    /// Generates the amount of weights that can no longer be moves
-    /// </summary>
-    /// <param name="numWeights">The amount of permanent weights on a scale</param>
-    /// <param name="maxTotalWeight">The amount of weight total on a scale</param>
-    /// <returns>The amount of weight on a scale that can not be moved</returns>
-    /// Might change the return to have a few weights you are able to take off the gain some new weights
-    /// this should be changed to weighing out an item or gold coins from a customer
-    private void GenerateScaleItem(Transform scaleLocation)
-    {
-        
     }
 
     private Vector3 RandomCirclePoint(Vector3 center, float radius)
@@ -228,7 +230,7 @@ public class ScalesScript : MonoBehaviour
 
     private void SpawnPermanentWeight()
     {
-        permaItem = Instantiate(permaweights[Random.Range(0, permaweights.Count - 1)], scales.ElementAt(1).Value.transform.position + (Vector3.up * 2), Quaternion.identity, transform);
+        permaItem = Instantiate(permaweights[Random.Range(0, permaweights.Count - 1)], scales.ElementAt(1).Value.transform.position + (Vector3.up * 1.4f), Quaternion.identity, transform);
     }
 
     private float CalculateDifferenceInWeight(float scale1, float scale2)
@@ -246,20 +248,20 @@ public class ScalesScript : MonoBehaviour
 
         float bigger = scale1 > scale2 ? scale1 : scale2;
         float smaller = scale1 > scale2 ? scale2 : scale1;
-        Debug.Log($"Bigger: {bigger}");
-        Debug.Log($"Smaller: {smaller}");
+        //Debug.Log($"Bigger: {bigger}");
+        //Debug.Log($"Smaller: {smaller}");
         float minTilt = bigger / 2;
         float smallDif = smaller - minTilt;
         if (Mathf.Sign(smallDif) == -1)
         {
-            Debug.Log("Too much diff");
+            //Debug.Log("Too much diff");
             // Too much diff
             return 1;
         }
 
         float diff = smallDif / minTilt;
 
-        Debug.Log($"Diff: {diff}");
+        //Debug.Log($"Diff: {diff}");
 
         Mathf.Clamp01(diff);
         return diff;//diff3;

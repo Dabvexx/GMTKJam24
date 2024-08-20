@@ -32,7 +32,7 @@ public class TitleScreenManager : MonoBehaviour
             movePoint += Vector3.up * 40;
         }
 
-        Vector3.MoveTowards(transform.position, movePoint, Time.deltaTime * 5);
+        transform.position = Vector3.MoveTowards(transform.position, movePoint, 5 * Time.deltaTime);
         
     }
 
